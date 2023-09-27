@@ -1,0 +1,218 @@
+openapi: 3.0.3
+info:
+  title: Task service
+  description: |-
+    This is a sample task service
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8181
+tags:
+  - name: Task
+    description: Operations about Task
+paths:
+
+
+
+  /v1/task/add:
+    post:
+      tags:
+        - task
+      summary: Add task
+      description: Add task 
+      operationId: addtask
+
+      requestBody:
+        description: add task object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task'
+
+      responses:
+        "200":
+            description: successful operation
+            content:
+              application/json:
+                examples:
+                  task added successfully:
+                    value:
+                      message: User Registered Successfully
+        "400":
+          description: Bad Request - see `message` field for additional information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+  
+  /v1/task/update:
+    put:
+      tags:
+        - task
+      summary: Update task
+      description: Update task 
+      operationId: updatetask
+      parameters:
+
+        - name: task_id
+          in: query
+          description: Id of task
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: update task object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task'
+
+      responses:
+        "200":
+            description: successful operation
+            content:
+              application/json:
+                examples:
+                  task updated successfully:
+                    value:
+                      message: updated Successfully
+        "400":
+          description: Bad Request - see `message` field for additional information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"              
+  /v1/task/list:
+    get:
+      tags:
+        - task
+      summary: list task
+      description: list task 
+      operationId: listetask
+
+      responses:
+        "200":
+            description: successful operation
+            content:
+              application/json:
+                examples:
+                  task list:
+                    value:
+                      message: List
+        "400":
+          description: Bad Request - see `message` field for additional information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+  /v1/task/remove:
+    delete:
+      tags:
+        - task
+      summary: delete task
+      description: delete task 
+      operationId: deletetask
+      parameters:
+
+        - name: task_id
+          in: query
+          description: Id of task
+          required: true
+          schema:
+            type: string
+
+
+      responses:
+        "200":
+            description: successful operation
+            content:
+              application/json:
+                examples:
+                  deleted successfully:
+                    value:
+                      message: deleted Successfully
+        "400":
+          description: Bad Request - see `message` field for additional information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"              
+  /v1/task/track:
+    get:
+      tags:
+        - task
+      summary: Track task
+      description: Track task 
+      operationId: tracktask
+      parameters:
+
+        - name: task_id
+          in: query
+          description: Id of task
+          required: true
+          schema:
+            type: string
+
+
+      responses:
+        "200":
+            description: successful operation
+            content:
+              application/json:
+                examples:
+                  deleted successfully:
+                    value:
+                      message: Tracked Successfully
+        "400":
+          description: Bad Request - see `message` field for additional information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"     
+components:
+
+
+  schemas:
+
+
+    task: 
+      type: object
+      properties:
+        task_name:
+          type: string
+          example: https://stackoverflow.com/
+        task_status:
+          type: string
+          enum: [OPEN,COMPLETED,IN_PROGRESS]
+          example: OPEN
+    login:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "login successful"
+        toke:
+          type: string
+          example: "as3sdsdjlkd9s"
+    BadRequestResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: Invalid request body.
+      
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+
+
+
+   
